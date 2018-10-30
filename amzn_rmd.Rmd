@@ -1,0 +1,27 @@
+---
+title: "Amazon Stock"
+author: "Michael Calabro"
+date: "10/30/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(tidyverse)
+library(readxl)
+library(readr)
+library(janitor)
+
+amzn <- read_xlsx("amzn_income.xlsx") %>%
+  clean_names()
+```
+
+```{r}
+amzn %>%
+  ggplot(aes(x = date)) +
+  geom_point(aes(y = amzn$net_product_sales, color = "products")) +
+  geom_point(aes(y = amzn$net_service_sales, color = "services")) + 
+  geom_point(aes(y = amzn$net_income, color = "net income"))
+```
+
