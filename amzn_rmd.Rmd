@@ -22,31 +22,41 @@ amzn <- read_xlsx("amzn_income.xlsx") %>%
 ```{r}
 amzn %>%
   ggplot(aes(x = date)) +
-  geom_bar(aes(y = net_product_sales, fill = "products"), stat = "identity") 
+  geom_bar(aes(y = net_product_sales), stat = "identity", fill = "blue")
 ```
 
 ```{r}
 amzn %>%
   ggplot(aes(x = date))+
-  geom_bar(aes(y = net_service_sales, fill = "services"), stat = "identity") 
+  geom_bar(aes(y = net_service_sales), stat = "identity", fill = "green") 
 ```
 
 ```{r}
 amzn %>%
   ggplot(aes(x = date)) + 
-  geom_histogram(aes(y = total_net_sales, fill = "total sales"), stat = "identity")
+  geom_histogram(aes(y = total_net_sales), stat = "identity", fill = "red")
 ```
 
 ```{r}
 amzn %>%
   ggplot(aes(x = date)) + 
-  geom_histogram(aes(y = net_income, fill = "net income"), stat = "identity")
+  geom_histogram(aes(y = net_income), stat = "identity", fill = "purple")
 ```
 ```{r}
 amzn %>%
   select(date, net_product_sales:total_net_sales, net_income, net_product_sales_yoy:total_net_sales_yoy) %>%
   kable() %>%
   kable_styling(bootstrap_options = "striped") 
-  
+```
+```{r}
+amzn13 <- amzn %>%
+  filter(date != "Dec. 31, 2012") 
+
+amzn13 %>%
+  ggplot(aes(x = date)) +
+  geom_line(aes(y = amzn13$net_product_sales_yoy, color = "products", group = 1)) + 
+  geom_line(aes(y = amzn13$net_service_sales_yoy, color = "services", group = 1)) +
+  geom_line(aes(y = amzn13$total_net_sales_yoy, color = "total sales", group = 1)) +
+  scale_y_continuous(name = "yoy % growth")
 ```
 
