@@ -20,8 +20,24 @@ amzn <- read_xlsx("amzn_income.xlsx") %>%
 ```{r}
 amzn %>%
   ggplot(aes(x = date)) +
-  geom_point(aes(y = amzn$net_product_sales, color = "products")) +
-  geom_point(aes(y = amzn$net_service_sales, color = "services")) + 
-  geom_point(aes(y = amzn$net_income, color = "net income"))
+  geom_bar(aes(y = net_product_sales, fill = "products"), stat = "identity") 
+```
+
+```{r}
+amzn %>%
+  ggplot(aes(x = date))+
+  geom_bar(aes(y = net_service_sales, fill = "services"), stat = "identity") 
+```
+
+```{r}
+amzn %>%
+  ggplot(aes(x = date)) + 
+  geom_histogram(aes(y = total_net_sales, fill = "total sales"), stat = "identity")
+```
+
+```{r}
+amzn %>%
+  ggplot(aes(x = date)) + 
+  geom_histogram(aes(y = net_income, fill = "net income"), stat = "identity")
 ```
 
