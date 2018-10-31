@@ -12,6 +12,8 @@ library(tidyverse)
 library(readxl)
 library(readr)
 library(janitor)
+library(knitr)
+library(kableExtra)
 
 amzn <- read_xlsx("amzn_income.xlsx") %>%
   clean_names()
@@ -39,5 +41,12 @@ amzn %>%
 amzn %>%
   ggplot(aes(x = date)) + 
   geom_histogram(aes(y = net_income, fill = "net income"), stat = "identity")
+```
+```{r}
+amzn %>%
+  select(date, net_product_sales:total_net_sales, net_income, net_product_sales_yoy:total_net_sales_yoy) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = "striped") 
+  
 ```
 
